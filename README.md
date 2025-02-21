@@ -2,13 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Bağlı liste düğüm yapısı
 typedef struct Node {
     char logEntry[256];
     struct Node *next;
 } Node;
 
-// Bağlı listeye yeni düğüm ekleme fonksiyonu
 void addNode(Node **head, const char *logEntry) {
     Node *newNode = (Node *)malloc(sizeof(Node));
     if (newNode == NULL) {
@@ -20,7 +18,6 @@ void addNode(Node **head, const char *logEntry) {
     *head = newNode;
 }
 
-// Bağlı listeyi ekranda gösterme fonksiyonu
 void printList(Node *head) {
     Node *current = head;
     while (current != NULL) {
@@ -29,7 +26,6 @@ void printList(Node *head) {
     }
 }
 
-// Bellekteki düğümleri serbest bırakma fonksiyonu
 void freeList(Node *head) {
     Node *current = head;
     Node *next;
@@ -50,17 +46,12 @@ int main() {
     Node *head = NULL;
     char buffer[256];
 
-    // Syslog dosyasını okuyup bağlı listeye ekleme
     while (fgets(buffer, sizeof(buffer), logFile)) {
         addNode(&head, buffer);
     }
 
     fclose(logFile);
-
-    // Bağlı listeyi ekranda gösterme
     printList(head);
-
-    // Bellekteki düğümleri serbest bırakma
     freeList(head);
 
     return EXIT_SUCCESS;
